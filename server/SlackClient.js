@@ -27,3 +27,5 @@ class SlackClient {
         this._rtm.start();
     }
 }
+
+module.exports = SlackClient;

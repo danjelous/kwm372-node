@@ -2,11 +2,14 @@
 
 const config = require('../config');
 const http = require('http');
+const log = config.log();
 
 // Commit config object
 const service = require('../server/service')(config);
-const log = config.log();
+const SlackClient = require('../server/SlackClient');
 const server = http.createServer(service);
+
+const slackClient = new SlackClient(config.slackToken, 'info', config.log);
 
 server.listen(process.env.PORT || 3000);
 
