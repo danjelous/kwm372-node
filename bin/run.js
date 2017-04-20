@@ -9,7 +9,7 @@ const service = require('../server/service')(config);
 const SlackClient = require('../server/SlackClient');
 const server = http.createServer(service);
 
-const slackClient = new SlackClient(config.slackToken, 'info', config.log());
+const slackClient = new SlackClient(config.slackToken, config.botName, 'info', config.log());
 
 slackClient.start(() => {
 

@@ -9,3 +9,7 @@ Slackbot made in the lecture 'Introduction to Node.js' at the University of Appl
 ## Run
 
 ``node bin/run.js``
+
+## Misc
+
+Don't forget to update your ``SLACK_TOKEN`` in your ``.env`` file!
