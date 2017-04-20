@@ -4,8 +4,8 @@ Slackbot made in the lecture 'Introduction to Node.js' at the University of Appl
 
 ## Install
 
-npm install
+``npm install``
 
 ## Run
 
-node
+``node bin/run.js``
