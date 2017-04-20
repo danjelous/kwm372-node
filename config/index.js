@@ -1,5 +1,6 @@
 'use strict';
 
+// Require .env in root
 require('dotenv').config();
 const bunyan = require('bunyan');
 
@@ -25,6 +26,9 @@ const log = {
 }
 
 module.exports = {
+
+    // Get TOKEN from .env file
+    slackToken: process.env.SLACK_TOKEN,
     log: (env) => {
 
         // Return property when already present
