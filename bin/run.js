@@ -9,9 +9,13 @@ const service = require('../server/service')(config);
 const SlackClient = require('../server/SlackClient');
 const server = http.createServer(service);
 
-const slackClient = new SlackClient(config.slackToken, 'info', config.log);
+const slackClient = new SlackClient(config.slackToken, 'info', config.log());
 
-server.listen(process.env.PORT || 3000);
+slackClient.start(() => {
+
+    // Start server only when connection to slack has been established!
+    server.listen(process.env.PORT || 3000);
+});
 
 // Emit on listening event
 server.on('listening', function(){
