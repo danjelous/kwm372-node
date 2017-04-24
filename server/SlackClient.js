@@ -10,7 +10,7 @@ class SlackClient {
     // log == custom logger
     // nlp == natural language processing
     constructor(token, nlp, botname, logLevel, log) {
-        this._rtm = new RtmClient(token, {logLevel: logLevel});
+        this._rtm = new RtmClient(token, { logLevel: logLevel });
         this._log = log;
         this._nlp = nlp;
         this._botname = botname;
@@ -19,23 +19,31 @@ class SlackClient {
     _handleOnMessage(message) {
 
         // Only react to our OWN bot :)
-        if(message.text && message.text.toLowerCase().includes(this._botname)) {
-            
+        if (message.text && message.text.toLowerCase().includes(this._botname)) {
+
             // Process to NLP, commit callback directly
             this._nlp.ask(message.text, (err, res) => {
 
-                if(err) {
+                if (err) {
                     this._log.fatal(err);
                     return;
                 }
 
                 try {
-                    if(!res.intent || !res.intent[0] || !res.intent[0].value) {
+                    if (!res.intent || !res.intent[0] || !res.intent[0].value) {
                         throw new Error("Could not extract intent.");
                     }
 
-                    const intent = res.intent[0].value;
-                    this._rtm.sendMessage(`Recieved question for intent ${intent}.`, message.channel);
+                    const intent = require('./intents/' + res.intent[0].value + 'Intent');
+                    intent.process(res, this._log, (error, response) => {
+
+                        if (error) {
+                            this._log.fatal(error.message);
+                            return;
+                        }
+
+                        return this._rtm.sendMessage(response, message.channel);
+                    });
                 } catch (err) {
 
                     // Error handling
@@ -44,8 +52,6 @@ class SlackClient {
                     return this._rtm.sendMessage(`I don't know what you are talking about..`, message.channel);
                 }
             });
-            
-            //this._rtm.sendMessage('Have a lovely day triepl-bot - feel yourself loved :heart:', message.channel);
         }
     }
 
@@ -59,8 +65,8 @@ class SlackClient {
 
     start(handler) {
         this._addAuthenticatedHandler(handler);
-        this._addAuthenticatedHandler(this._handleOnAuthenticated);        
-        this._rtm.on(RTM_EVENTS.MESSAGE, this._handleOnMessage.bind(this));        
+        this._addAuthenticatedHandler(this._handleOnAuthenticated);
+        this._rtm.on(RTM_EVENTS.MESSAGE, this._handleOnMessage.bind(this));
         this._rtm.start();
     }
 }
