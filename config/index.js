@@ -1,5 +1,9 @@
 'use strict';
 
+// NOTE TO PACKAGE.JSON
+// Runs also on windows with cross-env. start with 'npm start'
+
+
 // Require .env in root
 require('dotenv').config();
 const bunyan = require('bunyan');
