@@ -20,7 +20,32 @@ class SlackClient {
 
         // Only react to our OWN bot :)
         if(message.text && message.text.toLowerCase().includes(this._botname)) {
-            this._rtm.sendMessage('Have a lovely day triepl-bot - feel yourself loved :heart:', message.channel);
+            
+            // Process to NLP, commit callback directly
+            this._nlp.ask(message.text, (err, res) => {
+
+                if(err) {
+                    this._log.fatal(err);
+                    return;
+                }
+
+                try {
+                    if(!res.intent || !res.intent[0] || !res.intent[0].value) {
+                        throw new Error("Could not extract intent.");
+                    }
+
+                    const intent = res.intent[0].value;
+                    this._rtm.sendMessage(`Recieved question for intent ${intent}.`, message.channel);
+                } catch (err) {
+
+                    // Error handling
+                    this._log.info(err);
+                    this._log.info(res);
+                    return this._rtm.sendMessage(`I don't know what you are talking about..`, message.channel);
+                }
+            });
+            
+            //this._rtm.sendMessage('Have a lovely day triepl-bot - feel yourself loved :heart:', message.channel);
         }
     }
 
