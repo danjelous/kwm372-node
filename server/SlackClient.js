@@ -18,7 +18,7 @@ class SlackClient {
 
         // Only react to our OWN bot :)
         if(message.text && message.text.toLowerCase().includes(this._botname)) {
-            this._rtm.sendMessage('Have a lovely day - feel yourself loved :heart:', message.channel);
+            this._rtm.sendMessage('Have a lovely day triepl-bot - feel yourself loved :heart:', message.channel);
         }
     }
 

@@ -29,6 +29,7 @@ module.exports = {
 
     // Get TOKEN from .env file
     slackToken: process.env.SLACK_TOKEN,
+    witToken: process.env.WIT_TOKEN,
     botName: 'bot-danjelous',
     log: (env) => {
 
