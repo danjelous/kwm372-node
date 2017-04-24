@@ -8,9 +8,11 @@ const RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 class SlackClient {
 
     // log == custom logger
-    constructor(token, botname, logLevel, log) {
+    // nlp == neuro linguistic programm
+    constructor(token, nlp, botname, logLevel, log) {
         this._rtm = new RtmClient(token, {logLevel: logLevel});
         this._log = log;
+        this._nlp = nlp;
         this._botname = botname;
     }
 

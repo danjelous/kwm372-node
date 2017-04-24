@@ -7,9 +7,11 @@ const log = config.log();
 // Commit config object
 const service = require('../server/service')(config);
 const SlackClient = require('../server/SlackClient');
+const WitClient = require('../server/WitClient');
 const server = http.createServer(service);
 
-const slackClient = new SlackClient(config.slackToken, config.botName, 'info', config.log());
+const witClient = new WitClient(config.witToken);
+const slackClient = new SlackClient(config.slackToken, witClient, config.botName, 'info', config.log());
 
 slackClient.start(() => {
 
