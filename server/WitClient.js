@@ -14,7 +14,7 @@ class WitClient {
         request.get('https://api.wit.ai/message')
                .set('Authorization', 'Bearer ' + this._token)
                .query({v: '20170424'})
-               .query({q: encodeURIComponent(message)})
+               .query({q: message})
                .end((err, res) => {
 
                     // If an error occurs, return the error code to the given callback

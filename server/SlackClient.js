@@ -40,7 +40,7 @@ class SlackClient {
                         if (error) {
                             this._log.fatal(error.message);
                             return;
-                        }
+                        }console.log(response);
 
                         return this._rtm.sendMessage(response, message.channel);
                     });
