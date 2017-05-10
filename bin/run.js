@@ -10,8 +10,10 @@ const SlackClient = require('../server/SlackClient');
 const WitClient = require('../server/WitClient');
 const server = http.createServer(service);
 
+const serviceRegistry = require('../server/ServiceRegistry')
+
 const witClient = new WitClient(config.witToken);
-const slackClient = new SlackClient(config.slackToken, witClient, config.botName, 'info', config.log());
+const slackClient = new SlackClient(config.slackToken, witClient, config.botName, 'info', config.log(), serviceRegistry);
 
 slackClient.start(() => {
 

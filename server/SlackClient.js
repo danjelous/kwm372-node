@@ -9,11 +9,12 @@ class SlackClient {
 
     // log == custom logger
     // nlp == natural language processing
-    constructor(token, nlp, botname, logLevel, log) {
+    constructor(token, nlp, botname, logLevel, log, serviceRegistry) {
         this._rtm = new RtmClient(token, { logLevel: logLevel });
         this._log = log;
         this._nlp = nlp;
         this._botname = botname;
+        this._registry = serviceRegistry;
     }
 
     _handleOnMessage(message) {
@@ -35,7 +36,7 @@ class SlackClient {
                     }
 
                     const intent = require('./intents/' + res.intent[0].value + 'Intent');
-                    intent.process(res, this._log, (error, response) => {
+                    intent.process(res, this._registry, this._log, (error, response) => {
 
                         if (error) {
                             this._log.fatal(error.message);
