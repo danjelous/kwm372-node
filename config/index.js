@@ -35,6 +35,8 @@ module.exports = {
     slackToken: process.env.SLACK_TOKEN,
     witToken: process.env.WIT_TOKEN,
     botName: 'bot-danjelous',
+    serviceTimout: 30,
+
     log: (env) => {
 
         // Return property when already present
